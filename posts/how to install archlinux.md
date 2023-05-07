@@ -2,8 +2,8 @@
 title: "How to Install Archlinux"
 date: 2023-04-30T08:13:43+08:00
 draft: false
-tags: [arch]
-categories: [arch]
+tags: [linux]
+categories: [linux]
 ---
 ## 安装
 ### 进入安装界面
@@ -267,7 +267,7 @@ sudo pacman -S wqy-zenhei wqy-microhei
 > linux上尽量使用amd和intel
 
 ### 声音
-`sudo pacman -S alsa-utils pulseaudio pulseaudio-bluetooth`
+`sudo pacman -S alsa-utils`
 
 ### MAKEPKG
 - `sudo vim /etc/makepkg.conf`
