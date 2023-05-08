@@ -94,3 +94,90 @@ double && jref = 2.0*j + 18.5;      // not allowed for double &
 std::cout << rref << std::endl;     // display 6.0
 std::cout << jref << std::endl;     // display 48.5
 ```
+
+
+### 函数模板
+函数模板是通用的函数描述，它们使用泛型来定义函数，其中泛型可用具体的类型（如int或double）替换。模板本身并不创建任何函数，只是告诉编译器如何定义函数。
+使用方法：
+```cpp
+template <typename AnyType>
+void Swap(AnyType &a, AnyType &b){
+    AnyType tmp;
+    tmp = a;
+    a = b;
+    b = tmp;
+}
+
+template <class AnyType>
+void Swap(AnyType &a, AnyType &b){
+    AnyType tmp;
+    tmp = a;
+    a = b;
+    b = tmp;
+}
+```
+> 类型名可以任意选择(这里为AnyType)只要遵守C++命名规则就即可，许多程序员都使用简单的名称，如T。
+> 在C++98添加关键字typename之前，C++使用关键字class来创建模板（将typename 替换 为 class 即可）
+
+##### 模板的局限性
+假设有以下模板：
+```cpp
+template<class T>
+void f(T a, T b){
+    ...
+}
+```
+如果T为数组`a = b`将不成立，同理如果T为结构体，`if(a > b)`也不成立。编写的模板函数很可能无法处理某些类型。
+
+##### 显示具体化
+为了解决模板的局限性，可以提供一个具体化函数定义-----显示具体化（explicit specialization）,其中包含所需要的代码，当编译器找到与函数调用匹配的具体化定义
+时，将使用该定义，不再寻找模板。
+
+***第三代具体化(ISO/ANSI C++标准)***
+- 定于给定的函数名，可以有非模板函数，模板函数和显示具体化模板函数以及他们的重载版本。
+- 显示具体化的原型和定义应以template<>打头，并通过名称指出类型。
+- 具体化优于常规模板，而非模板函数优于具体化和常规模板。
+
+```cpp
+// non template function prototype
+void Swap(job &, job &);
+
+// template prototype
+template<typename T>
+void Swap(T &, T &);
+
+// explicit specialization for the job type
+template<> void Swap<job>(job &, job &);
+
+int main(){
+    double u, v;
+    ...
+    Swap(u, v); // use template
+    job a, b;
+    ...
+    Swap(a, b); // use void Swap<job>(job &, job &)
+}
+```
+
+##### 实例化和具体化
+在代码中包含函数模板本身并不会生成任何函数定义，它只是用于生函数定义的方案。编译器使用模板为特定类型生成函数时，得到的是模板实例。（调用模板函数时）
+例如函数调用Swap（u, v）导致编译器生成Swap（）实例，该实例类型使用int类型。这种实例化方式被称为`隐式实例化`，但现在C++还允许显示实例化(explicit instantation)，
+这意味着可以`直接命令编译器创建特定的实例`。
+```cpp
+template void Swap<int>(int, int);            // explicit instantation
+
+template <> void Swap(int &, int &);          // explicit specialization
+template <> void Swap<int> (int &, int &);    // explicit specialization
+
+
+template <typename T>
+T Add(T a, T b){
+    return a + b;
+}
+
+...
+int m = 6;
+double x = 10.2;
+cout << Add<double> (x, m) << endl;           // explicit instantation 
+```
+> 隐式实例化和显示实例化和显示具体化统称为具体化（specialization）。

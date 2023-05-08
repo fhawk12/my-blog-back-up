@@ -249,7 +249,7 @@ visudo
 #### 安装字体
 ```
 sudo pacman -S ttf-hack-nerd ttf-jetbrains-mono
-sudo pacman -S ttf-hanmon noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-sans-fonts adobe-source-serif-fonts adobe-source-han-sans-cn-fonts adobe-source-han-sans-hk-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts
+sudo pacman -S ttf-hannom noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-sans-fonts adobe-source-serif-fonts adobe-source-han-sans-cn-fonts adobe-source-han-sans-hk-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts
 sudo pacman -S wqy-zenhei wqy-microhei 
 ```
 #### 字体引擎
