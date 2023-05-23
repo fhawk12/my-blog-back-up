@@ -280,6 +280,11 @@ cd paru
 makepkg -si
 ```
 
+### Xorg
+  - `sudo pacman -S xorg-server xorg-xinit feh udisks2 udiskie pcmanfm`
+  - `cp /etc/X11/xinit/xinitrc ~/.Xinitrc`
+> 删除最后几行没有用到的exec 。
+
 
 
 
