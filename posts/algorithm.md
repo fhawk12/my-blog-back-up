@@ -7,10 +7,12 @@ categories: [algorithm]
 ---
 
 ## Binary Search
+
 [1498. Number of Subsequences That Satisfy the Given Sum Condition](https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/)  
 [1964. Find the Longest Valid Obstacle Course at Each Position](https://leetcode.com/problems/find-the-longest-valid-obstacle-course-at-each-position/)
 
 ### Single Target
+
 ```cpp
 int binary_search(int l, int r, int t) {
   while (l < r) {
@@ -29,6 +31,7 @@ int binary_search(int l, int r, int t) {
 ```
 
 ### Upper Bound
+
 ```cpp
 int upper_bound(int l, int r, int t) {
   while (l < r) {
@@ -45,6 +48,7 @@ int upper_bound(int l, int r, int t) {
 ```
 
 ### Lower Bound
+
 ```cpp
 int lower_bound(int l, int r, int t) {
   while (l < r) {
@@ -61,7 +65,9 @@ int lower_bound(int l, int r, int t) {
 ```
 
 ## LCS(Longest Common Subsequence)
-[1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/)  
+
+[1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/)
+
 ```cpp
 int LCS(string s, string t) {
   int n = s.size(), m = t.size();

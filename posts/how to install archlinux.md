@@ -5,33 +5,43 @@ draft: false
 tags: [linux]
 categories: [linux]
 ---
+
 ## 安装
+
 ### 进入安装界面
+
 ![](../images/archinstall/01.png)
 
 ### 连接网络
+
 ![](../images/archinstall/02.png)
-STD-wifi是wifi名字,如果不知道wifi名字的可以用命令`station wlan0 scan` 和 `station wlan0 get-network`来查看可以连接的wifi
+STD-wifi 是 wifi 名字,如果不知道 wifi 名字的可以用命令`station wlan0 scan` 和 `station wlan0 get-network`来查看可以连接的 wifi
+
 > 进入`iwctl`后可以使用命令`device list`来查看设备名称
 
-### 更新mirrorlist
+### 更新 mirrorlist
+
 ```
 reflector --country China --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 ```
 
 ### 分区
+
 `lsblk`查看磁盘信息
 ![](../images/archinstall/03.png)
 
 使用`fdisk`分区
 ![](../images/archinstall/04.png)
-n 代表新建一块分区，这里先建立第一块和第三块分区，分别作为efi和swap分区使用,这样做的好处是剩下的一个分区作为根目录可以不用计算大小直接使用默认值即可
-> 按p可查看目前分区表情况
-> 按w保存更改写入磁盘
+n 代表新建一块分区，这里先建立第一块和第三块分区，分别作为 efi 和 swap 分区使用,这样做的好处是剩下的一个分区作为根目录可以不用计算大小直接使用默认值即可
+
+> 按 p 可查看目前分区表情况
+> 按 w 保存更改写入磁盘
 
 ### 格式化分区
-使用mkfs(make file system)工具
+
+使用 mkfs(make file system)工具
+
 > **mkfs.+tab**查看可以格式化的格式
 
 ![](../images/archinstall/05.png)
@@ -42,16 +52,16 @@ mkfs.ext4 /dev/sda2
 mkswap /dev/sda3
 ```
 
-> 第一块分区作为efi必须使用vfat格式  
-> 第二块分区可以使用ext4和xfs。但是大部分linux系统使用是ext4,也可以使用较新的xfs(专门针对大文件的存储和读写)  
-> 第三块直接使用mkswap即可
+> 第一块分区作为 efi 必须使用 vfat 格式  
+> 第二块分区可以使用 ext4 和 xfs。但是大部分 linux 系统使用是 ext4,也可以使用较新的 xfs(专门针对大文件的存储和读写)  
+> 第三块直接使用 mkswap 即可
 
 全部完成后`lsblk -f`查看是否成功
 
 ![](../images/archinstall/06.png)
 
-
 ### 挂载
+
 ![](../images/archinstall/07.png)
 
 ```
@@ -63,26 +73,33 @@ lsblk
 ```
 
 ### 安装系统
+
 `pacstrap /mnt linux linux-firmware linux-headers base base-devel vim bash-completion`
-> 相当于把新系统装到mnt挂在的第二个分区里面
+
+> 相当于把新系统装到 mnt 挂在的第二个分区里面
 
 ### 生成表文件
+
 ```
 genfstab -U /mnt
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ### 进入系统并安装包
+
 ```
 arch-chroot /mnt
 pacman -Syy
 pacman -S grub efibootmgr efivar networkmanager amd-ucode
 ```
-> 如果是intel处理器 将amd-ucode 换成 intel-ucode
 
-### 安装grub并配置
+> 如果是 intel 处理器 将 amd-ucode 换成 intel-ucode
+
+### 安装 grub 并配置
+
 - 安装命令`grub-install /dev/sda`
 - 修改配置`vim /etc/default/grub`
+
 ```
 # GRUB boot loader configuration
 
@@ -148,17 +165,19 @@ GRUB_DISABLE_RECOVERY=true
 # operating systems.
 #GRUB_DISABLE_OS_PROBER=false
 ```
-> - `GRUB_TIMEOUT=2`  减少等待时间
-> - `GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"`  生成日志
-> - `GRUB_GFXMODE=1920*1080`  分辨率
 
-生成配置文件   
+> - `GRUB_TIMEOUT=2` 减少等待时间
+> - `GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3"` 生成日志
+> - `GRUB_GFXMODE=1920*1080` 分辨率
+
+生成配置文件  
 `grub-mkconfig -o /boot/grub/grub.cfg`
 
 ### 其他
+
 - 网络配置`systemctl enable NetworkManager`
 
-- 为root创建密码`passwd`,如果忘记了插入usb重新用arch-chroot进入系统后设置
+- 为 root 创建密码`passwd`,如果忘记了插入 usb 重新用 arch-chroot 进入系统后设置
 
 - 退出新系统`exit`后，卸载挂载`umount -R /mnt`
 
@@ -166,16 +185,18 @@ GRUB_DISABLE_RECOVERY=true
 
 ![](../images/archinstall/08.png)
 
-现在一个新的arlinux系统就已经装好了！！！
-
+现在一个新的 arlinux 系统就已经装好了！！！
 
 ## 配置
 
-### 给arch取名
+### 给 arch 取名
+
 `vim /etc/hostname` 直接输入名字即可,重启后生效
 
-### host配置
+### host 配置
+
 `vim /etc/hosts`
+
 ```
 # Static table lookup for hostnames.
 # See hosts(5) for details.
@@ -218,62 +239,83 @@ GRUB_DISABLE_RECOVERY=true
 ```
 
 ### 同步时间
+
 ```
 timedatectl set-timezone Asia/Shanghai
 timedatectl set-ntp true
 ```
 
 ### 添加用户
+
 #### 添加用户
+
 ```bash
 # 用户名为 ***
 useradd --create-home ***
 passwd ***
 usermod -aG wheel,users,storage,power,lp,adm,optical ***
 ```
-> `id ***` 查看是否添加成功   
 
-#### 让***能用sudo
+> `id ***` 查看是否添加成功
+
+#### 让\*\*\*能用 sudo
+
 ```
 export EDITOR=vim
 visudo
 ```
+
 去掉`%whell ALL=(ALL:ALL) ALL`的注释
 
 ### 字体
+
 #### 生成字体
+
 - `sudo vim /etc/locale.gen` 将`en_US.UTF-8 UTF-8`和`zh_CN.UTF-8 UTF-8`的注释取消
 - `sudo vim /etc/locale.conf` 写入`LANG=en_US.UTF-8`
 - `sudo locale-gen` 生成字体
 
 #### 安装字体
+
 ```
 sudo pacman -S ttf-hack-nerd ttf-jetbrains-mono
 sudo pacman -S ttf-hannom noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-sans-fonts adobe-source-serif-fonts adobe-source-han-sans-cn-fonts adobe-source-han-sans-hk-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts
-sudo pacman -S wqy-zenhei wqy-microhei 
+sudo pacman -S wqy-zenhei wqy-microhei
 ```
+
 #### 字体引擎
-- 安装freetype `sudo pacman -S freetype2`
+
+- 安装 freetype `sudo pacman -S freetype2`
 - `sudo vim /etc/profile.d/freetype2.sh`
-- 将export的注释取消
+- 将 export 的注释取消
 
 ### 显卡驱动
+
 #### amd
+
 `sudo pacman -S xf86-video-amdgpu xf86-video-ati mesa vulkan-radeon`
+
 #### intel
+
 `sudo pacman -S xf86-video-intel vulkan-intel mesa`
+
 #### nvidia
+
 `sudo pacman -S nvidia nvidia-settings nvidia-utils`
-> linux上尽量使用amd和intel
+
+> linux 上尽量使用 amd 和 intel
 
 ### 声音
+
 `sudo pacman -S alsa-utils`
 
 ### MAKEPKG
+
 - `sudo vim /etc/makepkg.conf`
 - 修改`MAKEFLAGS="-j$(nproc)"` 且取消注释
 
 ### AUR HELPER
+
 ```
 git clone https://aur.archlinux.org/paru.git
 cd paru
@@ -281,11 +323,7 @@ makepkg -si
 ```
 
 ### Xorg
-  - `sudo pacman -S xorg-server xorg-xinit feh udisks2 udiskie pcmanfm`
-  - `cp /etc/X11/xinit/xinitrc ~/.Xinitrc`
-> 删除最后几行没有用到的exec 。
 
-
-
-
-
+- `sudo pacman -S xorg-server xorg-xinit feh udisks2 udiskie pcmanfm`
+- `cp /etc/X11/xinit/xinitrc ~/.Xinitrc`
+  > 删除最后几行没有用到的 exec 。

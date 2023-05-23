@@ -4,29 +4,31 @@ date: 2023-04-29T10:56:15+08:00
 draft: false
 tags: [git]
 categories: [git]
-
 ---
 
-github有时候可以登上去，有时候挂着vpn都没用，据说是某些不可描述的机构对该网站的DNS污染或者随机丢包造成的。  
+## 什么是 DNS 污染呢？
 
-## 什么是DNS污染呢？
-本来很多域名对应的IP地址都是由上游可信赖的服务器提供的，这样可以降低网络上的流量压力 但是对于有些攻击来说，
-他就去污染可信赖服务器里数据包，这样我一请求github，都给我登上了错误的服务器或服务器的网址
+本来很多域名对应的 IP 地址都是由上游可信赖的服务器提供的，这样可以降低网络上的流量压力 但是对于有些攻击来说，
+他就去污染可信赖服务器里数据包，这样我一请求 github，都给我登上了错误的服务器或服务器的网址
 
 ## github 无法访问解决办法
 
 ### 加速器
+
 网上有各种各样的加速器来解决，但是大部分都先体验再收费
 
-### 修改本地host
-既然上游服务器的域名地址被修改了，那我们直接在本地hosts文件了指定好域名对应的IP地址不就好了嘛 hosts 文件在每个系统的位置不一，详情如下：
+### 修改本地 host
+
+既然上游服务器的域名地址被修改了，那我们直接在本地 hosts 文件了指定好域名对应的 IP 地址不就好了嘛 hosts 文件在每个系统的位置不一，详情如下：
+
 - Windows 系统：C:\Windows\System32\drivers\etc\hosts
 - Linux 系统：/etc/hosts
 - Mac（苹果电脑）系统：/etc/hosts
 - Android（安卓）系统：/system/etc/hosts
-- iPhone（iOS）系统：/etc/hosts 然后将下面这些数据拷贝到自己电脑的hosts文件，再激活生效就可以了  
+- iPhone（iOS）系统：/etc/hosts 然后将下面这些数据拷贝到自己电脑的 hosts 文件，再激活生效就可以了
 
-[https://github.com/521xueweihan/GitHub520](https://github.com/521xueweihan/GitHub520)最新的github dns  
+[https://github.com/521xueweihan/GitHub520](https://github.com/521xueweihan/GitHub520)最新的 github dns
+
 ```
 140.82.114.25                 alive.github.com
 140.82.112.25                 live.github.com
@@ -68,16 +70,17 @@ github有时候可以登上去，有时候挂着vpn都没用，据说是某些�
 
 - Windows：在 CMD 窗口输入：ipconfig /flushdns
 - Linux 命令：sudo nscd restart，如报错则须安装：sudo apt install nscd 或 sudo /etc/init.d/nscd restart
-- Mac 命令：sudo killall -HUP mDNSResponder 如果还没有生效的话，可以尝试重启一下电脑，毕竟这步操作可以解决 95 % 的电脑bug
-- 当然还有一些自动修改hosts文件的软件，但是有一定的风险性，所以如果手动修改hosts也没用的话，建议再参考一下镜像通道
+- Mac 命令：sudo killall -HUP mDNSResponder 如果还没有生效的话，可以尝试重启一下电脑，毕竟这步操作可以解决 95 % 的电脑 bug
+- 当然还有一些自动修改 hosts 文件的软件，但是有一定的风险性，所以如果手动修改 hosts 也没用的话，建议再参考一下镜像通道
 
 ### 镜像通道
-如果手动修改hosts还不行的话，可以尝试使用镜像通道
+
+如果手动修改 hosts 还不行的话，可以尝试使用镜像通道
 例如原始用法是：
 `git clone https://github.com/PaddlePaddle/PaddleDetection`
 
 那加速通道就是：  
 `git clone https://hub.fastgit.org/PaddlePaddle/PaddleDetection.git`
 
-也就是github clone加速的时候，前面的域名用`https://hub.fastgit.org/来替换掉https://github.com`就行啦!
-当然，对于镜像通道也可以使用fastgit的开源软件：`https://github.com/xljiulang/FastGithub`
+也就是 github clone 加速的时候，前面的域名用`https://hub.fastgit.org/来替换掉https://github.com`就行啦!
+当然，对于镜像通道也可以使用 fastgit 的开源软件：`https://github.com/xljiulang/FastGithub`
