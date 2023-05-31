@@ -14,53 +14,72 @@ categories: [algorithm]
 ### Single Target
 
 ```cpp
-int binary_search(int l, int r, int t) {
-  while (l < r) {
-    int mid = l + (r - l) / 2;
-    if (f(mid) == t)
-      return mid;
-    if (mid < t) {
-      l = mid + 1;
-    } else {
-      r = mid;
+int binary_search(int l, int r, int t)
+{
+    while (l < r)
+    {
+        int mid = l + (r - l) / 2;
+        if (f(mid) == t)
+            return mid;
+        if (mid < t)
+        {
+            l = mid + 1;
+        }
+        else
+        {
+            r = mid;
+        }
     }
-  }
 
-  return -1;
+    return -1;
 }
 ```
 
 ### Upper Bound
 
 ```cpp
-int upper_bound(int l, int r, int t) {
-  while (l < r) {
-    int mid = l + (r - l) / 2;
-    if (f(mid) <= t) {
-      l = mid + 1;
-    } else {
-      r = mid;
+int upper_bound(int l, int r, int t)
+{
+    while (l < r)
+    {
+        int mid = l + (r - l) / 2;
+        if (f(mid) <= t)
+        {
+            l = mid + 1;
+        }
+        else
+        {
+            r = mid;
+        }
     }
-  }
 
-  return l;
+    return l;
 }
 ```
 
 ### Lower Bound
 
 ```cpp
-int lower_bound(int l, int r, int t) {
-  while (l < r) {
-    int mid = l + (r - l) / 2;
-    if (f(mid) < t) {
-      l = mid + 1;
-    } else {
-      r = mid;
+int LCS(string s, string t)
+{
+    int n = s.size(), m = t.size();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1));
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (s[i] == t[j])
+            {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            }
+            else
+            {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
     }
-  }
 
-  return l;
+    return dp[n][m];
 }
 ```
 
@@ -69,19 +88,46 @@ int lower_bound(int l, int r, int t) {
 [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/)
 
 ```cpp
-int LCS(string s, string t) {
-  int n = s.size(), m = t.size();
-  vector<vector<int>> dp(n + 1, vector<int>(m + 1));
-  for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= m; j++) {
-      if (s[i] == t[j]) {
-        dp[i][j] = dp[i - 1][j - 1] + 1;
-      } else {
-        d[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-      }
+int LCS(string s, string t)
+{
+    int n = s.size(), m = t.size();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1));
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (s[i] == t[j])
+            {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            }
+            else
+            {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
     }
-  }
 
-  return dp[n][m];
+    return dp[n][m];
+}
+```
+
+## Stack
+
+### monotonic stack
+
+[1130. 叶值的最小代价生成树](https://leetcode.cn/problems/minimum-cost-tree-from-leaf-values/)
+
+```cpp
+void monotonicStack(vector<int> nums)
+{
+    stack<int> st;
+    for (int x : nums)
+    {
+        while (!st.empty() && x < nums.top())
+        {
+            nums.top();
+        }
+        st.push(x);
+    }
 }
 ```
