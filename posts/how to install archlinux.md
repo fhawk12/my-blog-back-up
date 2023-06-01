@@ -325,5 +325,5 @@ makepkg -si
 ### Xorg
 
 - `sudo pacman -S xorg-server xorg-xinit feh udisks2 udiskie pcmanfm`
-- `cp /etc/X11/xinit/xinitrc ~/.Xinitrc`
+- `cp /etc/X11/xinit/xinitrc ~/.xinitrc`
   > 删除最后几行没有用到的 exec 。

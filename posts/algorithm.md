@@ -115,7 +115,8 @@ int LCS(string s, string t)
 
 ### monotonic stack
 
-[1130. 叶值的最小代价生成树](https://leetcode.cn/problems/minimum-cost-tree-from-leaf-values/)
+[1130. 叶值的最小代价生成树](https://leetcode.cn/problems/minimum-cost-tree-from-leaf-values/)  
+[2517. 礼盒的最大甜蜜度](https://leetcode.cn/problems/maximum-tastiness-of-candy-basket/)
 
 ```cpp
 void monotonicStack(vector<int> nums)
@@ -131,3 +132,11 @@ void monotonicStack(vector<int> nums)
     }
 }
 ```
+
+// TODO add graph template shortest path
+
+## Graph
+
+### Shortest Path
+
+#### Dijkstra
