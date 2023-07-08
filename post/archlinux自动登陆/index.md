@@ -19,7 +19,7 @@ toc: false
 
 ### 自动启动 startx
 
-`nvim ~/.zprofile`
+zsh shell： `nvim ~/.zprofile`
 
 ```
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
@@ -28,5 +28,12 @@ fi
 ```
 
 <br>
+
+fish shell：`nvim ~/.config/fish/config.fish`
+```
+if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
+    exec startx
+end
+```
 
 ok, that's all, 你现在拥有闪电般的开机速度了

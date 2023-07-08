@@ -10,11 +10,11 @@ categories: [linux]
 
 ### 进入安装界面
 
-![](../images/archinstall/01.png)
+![](01.png)
 
 ### 连接网络
 
-![](../images/archinstall/02.png)
+![](02.png)
 STD-wifi 是 wifi 名字,如果不知道 wifi 名字的可以用命令`station wlan0 scan` 和 `station wlan0 get-network`来查看可以连接的 wifi
 
 > 进入`iwctl`后可以使用命令`device list`来查看设备名称
@@ -25,14 +25,21 @@ STD-wifi 是 wifi 名字,如果不知道 wifi 名字的可以用命令`station w
 reflector --country China --sort rate --save /etc/pacman.d/mirrorlist
 pacman -Syy
 ```
+推荐的软件仓库镜像源  
+```
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch           # 中国科学技术大学开源镜像站
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch  # 清华大学开源软件镜像站
+Server = https://repo.huaweicloud.com/archlinux/$repo/os/$arch          # 华为开源镜像站
+Server = http://mirror.lzu.edu.cn/archlinux/$repo/os/$arch              # 兰州大学开源镜像站
+```
 
 ### 分区
 
-`lsblk`查看磁盘信息
-![](../images/archinstall/03.png)
+`lsblk`查看磁盘信息  
+![](03.png)
 
 使用`fdisk`分区
-![](../images/archinstall/04.png)
+![](04.png)
 n 代表新建一块分区，这里先建立第一块和第三块分区，分别作为 efi 和 swap 分区使用,这样做的好处是剩下的一个分区作为根目录可以不用计算大小直接使用默认值即可
 
 > 按 p 可查看目前分区表情况
@@ -44,7 +51,7 @@ n 代表新建一块分区，这里先建立第一块和第三块分区，分别
 
 > **mkfs.+tab**查看可以格式化的格式
 
-![](../images/archinstall/05.png)
+![](05.png)
 
 ```
 mkfs.vfat /dev/sda1
@@ -58,11 +65,11 @@ mkswap /dev/sda3
 
 全部完成后`lsblk -f`查看是否成功
 
-![](../images/archinstall/06.png)
+![](06.png)
 
 ### 挂载
 
-![](../images/archinstall/07.png)
+![](07.png)
 
 ```
 mount /dev/sda2 /mnt
@@ -183,7 +190,7 @@ GRUB_DISABLE_RECOVERY=true
 
 ### 完成
 
-![](../images/archinstall/08.png)
+![](08.png)
 
 现在一个新的 arlinux 系统就已经装好了！！！
 
